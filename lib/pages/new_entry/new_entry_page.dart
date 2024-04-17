@@ -339,15 +339,26 @@ class _NewEntryPageState extends State<NewEntryPage> {
       } else {
         hour = hour + (medicine.interval! * i);
       }
-      await flutterLocalNotificationsPlugin.showDailyAtTime(
-          int.parse(medicine.notificationIDs![i]),
-          'Reminder: ${medicine.medicineName}',
-          medicine.medicineType.toString() != MedicineType.None.toString()
-              ? 'It is time to take your ${medicine.medicineType!.toLowerCase()}, according to schedule'
-              : 'It is time to take your medicine, according to schedule',
-          Time(hour, minute, 0),
-          platformChannelSpecifics);
-      hour = ogValue;
+      await flutterLocalNotificationsPlugin.zonedSchedule(
+        int.parse(medicine.notificationIDs![i]),
+        'Reminder: ${medicine.medicineName}',
+        medicine.medicineType.toString() != MedicineType.None.toString()
+            ? 'It is time to take your ${medicine.medicineType!.toLowerCase()}, according to schedule'
+            : 'It is time to take your medicine, according to schedule',
+        tz.TZDateTime.now(tz.local).add(const Duration(
+            days: 1)), // Set the initial scheduled time to tomorrow
+        const NotificationDetails(
+          android: AndroidNotificationDetails(
+            'your channel id',
+            'your channel name',
+            importance: Importance.max,
+            priority: Priority.high,
+          ),
+        ),
+        androidAllowWhileIdle: true,
+        uiLocalNotificationDateInterpretation:
+            UILocalNotificationDateInterpretation.absoluteTime,
+      );
     }
   }
 }
@@ -402,7 +413,7 @@ class _SelectTimeState extends State<SelectTime> {
                   : "${convertTime(_time.hour.toString())}:${convertTime(_time.minute.toString())}",
               style: Theme.of(context)
                   .textTheme
-                  .subtitle2!
+                  .titleSmall!
                   .copyWith(color: kScaffoldColor),
             ),
           ),
@@ -432,7 +443,7 @@ class _IntervalSelectionState extends State<IntervalSelection> {
         children: [
           Text(
             'Remind me every',
-            style: Theme.of(context).textTheme.subtitle2!.copyWith(
+            style: Theme.of(context).textTheme.titleSmall!.copyWith(
                   color: kTextColor,
                 ),
           ),
@@ -443,7 +454,7 @@ class _IntervalSelectionState extends State<IntervalSelection> {
             hint: _selected == 0
                 ? Text(
                     'Select an Interval',
-                    style: Theme.of(context).textTheme.caption!.copyWith(
+                    style: Theme.of(context).textTheme.bodySmall!.copyWith(
                           color: kPrimaryColor,
                         ),
                   )
@@ -456,7 +467,7 @@ class _IntervalSelectionState extends State<IntervalSelection> {
                   value: value,
                   child: Text(
                     value.toString(),
-                    style: Theme.of(context).textTheme.caption!.copyWith(
+                    style: Theme.of(context).textTheme.bodySmall!.copyWith(
                           color: kSecondaryColor,
                         ),
                   ),

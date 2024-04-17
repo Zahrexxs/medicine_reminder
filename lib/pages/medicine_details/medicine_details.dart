@@ -28,7 +28,7 @@ class _MedicineDetailsState extends State<MedicineDetails> {
           children: [
             MainSection(medicine: widget.medicine),
             ExtendedSection(medicine: widget.medicine),
-            Spacer(),
+            const Spacer(),
             SizedBox(
               width: 100.w,
               height: 7.h,
@@ -46,7 +46,7 @@ class _MedicineDetailsState extends State<MedicineDetails> {
                   'Delete',
                   style: Theme.of(context)
                       .textTheme
-                      .subtitle1!
+                      .titleMedium!
                       .copyWith(color: kScaffoldColor),
                 ),
               ),
@@ -77,7 +77,7 @@ class _MedicineDetailsState extends State<MedicineDetails> {
           title: Text(
             'Delete This Reminder?',
             textAlign: TextAlign.center,
-            style: Theme.of(context).textTheme.subtitle1,
+            style: Theme.of(context).textTheme.titleMedium,
           ),
           actions: [
             TextButton(
@@ -86,7 +86,7 @@ class _MedicineDetailsState extends State<MedicineDetails> {
               },
               child: Text(
                 'Cancel',
-                style: Theme.of(context).textTheme.caption,
+                style: Theme.of(context).textTheme.bodySmall,
               ),
             ),
             TextButton(
@@ -99,7 +99,7 @@ class _MedicineDetailsState extends State<MedicineDetails> {
                 'OK',
                 style: Theme.of(context)
                     .textTheme
-                    .caption!
+                    .bodySmall!
                     .copyWith(color: kSecondaryColor),
               ),
             ),
@@ -213,14 +213,14 @@ class MainInfoTab extends StatelessWidget {
           children: [
             Text(
               fieldTitle,
-              style: Theme.of(context).textTheme.subtitle2,
+              style: Theme.of(context).textTheme.titleSmall,
             ),
             SizedBox(
               height: 0.3.h,
             ),
             Text(
               fieldInfo,
-              style: Theme.of(context).textTheme.headline5,
+              style: Theme.of(context).textTheme.headlineSmall,
             ),
           ],
         ),
@@ -276,14 +276,14 @@ class ExtendedInfoTab extends StatelessWidget {
             padding: EdgeInsets.only(bottom: 1.h),
             child: Text(
               fieldTitle,
-              style: Theme.of(context).textTheme.subtitle2!.copyWith(
+              style: Theme.of(context).textTheme.titleSmall!.copyWith(
                     color: kTextColor,
                   ),
             ),
           ),
           Text(
             fieldInfo,
-            style: Theme.of(context).textTheme.caption!.copyWith(
+            style: Theme.of(context).textTheme.bodySmall!.copyWith(
                   color: kSecondaryColor,
                 ),
           ),
